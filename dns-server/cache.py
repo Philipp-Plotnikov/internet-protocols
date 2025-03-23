@@ -3,7 +3,6 @@ import pickle
 import dnslib
 from cache_dns_record import CacheDNSRecord
 from dnslib import DNSRecord
-from io import open
 
 
 class Cache:
@@ -24,9 +23,9 @@ class Cache:
             if record_type == dnslib.QTYPE.NS:
                 self.update_ns(new_record, full_domain_name)
             elif record_type == dnslib.QTYPE.A:
-                self.update_a(new_record, full_domain_name)
+                self.update_a(new_record, full_domain_name, dns_answer.rr)
             elif record_type == dnslib.QTYPE.AAAA:
-                self.update_aaaa(new_record, full_domain_name)
+                self.update_aaaa(new_record, full_domain_name, dns_answer.rr)
             elif record_type == dnslib.QTYPE.PTR:
                 self.update_ptr(new_record, full_domain_name)
 
@@ -37,15 +36,15 @@ class Cache:
         self.__ns[full_domain_name] = cache_dns_record
 
 
-    def update_a(self, new_record, full_domain_name: str):
+    def update_a(self, new_record, full_domain_name: str, resource_record: list):
         cache_dns_record = CacheDNSRecord(new_record.ttl)
-        cache_dns_record.objects.append(new_record.rdata.data)
+        cache_dns_record.objects.extend(resource_record)
         self.__a[full_domain_name] = cache_dns_record
 
 
-    def update_aaaa(self, new_record, full_domain_name: str):
+    def update_aaaa(self, new_record, full_domain_name: str, resource_record: list):
         cache_dns_record = CacheDNSRecord(new_record.ttl)
-        cache_dns_record.objects.append(new_record.rdata.data)
+        cache_dns_record.objects.extend(resource_record)
         self.__aaaa[full_domain_name] = cache_dns_record
 
 

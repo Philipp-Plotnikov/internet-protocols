@@ -3,6 +3,7 @@ import dnslib
 from dnslib import DNSRecord
 from cache import Cache
 import threading
+from cache_dns_record import CacheDNSRecord
 
 LOCK = threading.Lock()
 
@@ -40,7 +41,7 @@ class DNSServer:
             print(e)
 
 
-    def add_answer_to_query(self, cache_record: DNSRecord, dns_query: DNSRecord):
+    def add_answer_to_query(self, cache_record: CacheDNSRecord, dns_query: DNSRecord):
         q_type = dns_query.q.qtype
         q = dns_query.q
         cache = self.__cache
@@ -52,7 +53,7 @@ class DNSServer:
                     q.qclass,
                     q.qtype,
                     cache.remain_ttl(cache_record),
-                    dnslib.A(addr)
+                    dnslib.A(addr.rdata.data)
                 ))
             return
         if q_type == dnslib.QTYPE.AAAA:
