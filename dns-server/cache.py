@@ -76,16 +76,20 @@ class Cache:
         return full_domain_name
 
     def delete_expired_records(self):
-        for key, value in self.__a.items():
+        list_copy = self.__a.copy()
+        for key, value in list_copy.items():
             if self.remain_ttl(value) == 0:
                 self.__a.pop(key, None)
-        for key, value in self.__aaaa.items():
+        list_copy = self.__aaaa.copy()
+        for key, value in list_copy.items():
             if self.remain_ttl(value) == 0:
                 self.__aaaa.pop(key, None)
-        for key, value in self.__ns.items():
+        list_copy = self.__ns.copy()
+        for key, value in list_copy.items():
             if self.remain_ttl(value) == 0:
                 self.__ns.pop(key, None)
-        for key, value in self.__ptr.items():
+        list_copy = self.__ptr.copy()
+        for key, value in list_copy.items():
             if self.remain_ttl(value) == 0:
                 self.__ptr.pop(key, None)
 
