@@ -41,7 +41,7 @@ def identify_protocol(sock: socket, port: int):
 
 def scan_udp(ip: str, port: int):
     udp_socket = socket(AF_INET, SOCK_DGRAM)
-    udp_socket.settimeout(0.5)
+    udp_socket.settimeout(1.0)
     try:
         if port in [53, 123]:
             probe = PROTOCOL_PROBES["DNS"] if port == 53 else PROTOCOL_PROBES["SNTP"]
