@@ -50,8 +50,8 @@ class DNSServer:
                 dns_query.add_answer(
                     dnslib.RR(
                     q.qname,
-                    q.qclass,
                     q.qtype,
+                    q.qclass,
                     cache.remain_ttl(cache_record),
                     dnslib.A(addr.rdata.data)
                 ))
@@ -61,8 +61,8 @@ class DNSServer:
                 dns_query.add_answer(
                     dnslib.RR(
                     q.qname,
-                    q.qclass,
                     q.qtype,
+                    q.qclass,
                     cache.remain_ttl(cache_record),
                     dnslib.AAAA(addr)
                 ))
@@ -71,8 +71,8 @@ class DNSServer:
             for addr in cache_record.objects:
                 dns_query.add_answer(dnslib.RR(
                     q.qname,
-                    q.qclass,
                     q.qtype,
+                    q.qclass,
                     cache.remain_ttl(cache_record),
                     dnslib.NS(addr)
                 ))
@@ -80,11 +80,11 @@ class DNSServer:
         if q_type == dnslib.QTYPE.PTR:
             dns_query.add_answer(dnslib.RR(
                 q.qname,
-                q.qclass,
                 q.qtype,
+                q.qclass,
                 cache.remain_ttl(cache_record),
-                dnslib.PTR(cache_record.name))
-            )
+                dnslib.PTR(cache_record.name)
+            ))
 
 
     def start(self):
