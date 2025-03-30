@@ -32,11 +32,11 @@ def identify_protocol(sock: socket, port: int):
             sock.sendall(probe)
             response = sock.recv(1024).decode(errors="ignore")
             if response:
-                print(f"  {port}: Likely protocol -> {proto} (Response: {response[:50]}...)")
+                print(f"\n{port}: Likely protocol -> {proto} (Response: {response[:50]}...)")
                 return
         except Exception:
             continue
-    print(f"  {port}: Unknown protocol")
+    print(f"\n{port}: Unknown protocol")
 
 
 def scan_udp(ip: str, port: int):
@@ -52,7 +52,7 @@ def scan_udp(ip: str, port: int):
                 return
         else:
             identify_protocol(udp_socket, port)
-        print(f"\n{port}: UDP port is open but protocol unknown")
+        print(f"{port}: UDP port is open but protocol unknown")
     except Exception:
         print(f"\n{port}: UDP port is closed")
     finally:

@@ -2,10 +2,7 @@ import socket
 import dnslib
 from dnslib import DNSRecord
 from cache import Cache
-import threading
 from cache_dns_record import CacheDNSRecord
-
-LOCK = threading.Lock()
 
 class DNSServer:
     __PORT = 53
@@ -95,8 +92,7 @@ class DNSServer:
                 while True:
                     try:
                         query_data, customer_addr = host_socket.recvfrom(10000)
-                        with LOCK:
-                            self.handle_request(query_data, customer_addr)
+                        self.handle_request(query_data, customer_addr)
                     except Exception as e:
                         print(e)
 
